@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class KasirController extends Controller
 {
     function pilih(Produk $produk) {
-        return view('pilih', compact('paket'));
+        return view('pilih', compact('produk'));
     }
 
     function postpilih(Request $request, Transaksi $transaksi) {
