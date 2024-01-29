@@ -31,7 +31,7 @@
                     </div>
                     <div class="mt-3">
                         <a href="/homeAdmin" class="btn btn-dark mt-3">Kembali</a>
-                        <button type="submit" class="btn btn-primary mt-3">Bayar</button>
+                        <button type="submit" class="btn btn-primary mt-3">Edit</button>
                     </div>
                 </div>
             </form>

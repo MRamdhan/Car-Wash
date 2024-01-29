@@ -55,17 +55,15 @@
             </tr>
         </thead>
         <tbody>
-            @if (!empty($data) && (is_array($data) || is_object($data)))
-                @foreach ($data as $item)
-                    <tr>
-                        <td data-column="Last Name">{{ $item->created_at }}</td>
-                        <td data-column="Last Name">{{ $item->noTlp }}</td>
-                        <td data-column="First Name">{{ $item->nama }}</td>
-                        <td data-column="Last Name">{{ $item->namaPaket }}</td>
-                        <td data-column="Last Name">{{ number_format($item->harga, 3,',','.') }}</td>
-                    </tr>
-                @endforeach
-            @endif
+            @foreach ($data as $item)
+                <tr>
+                    <td data-column="Last Name">{{ $item->created_at }}</td>
+                    <td data-column="Last Name">{{ $item->noTlp }}</td>
+                    <td data-column="First Name">{{ $item->nama }}</td>
+                    <td data-column="Last Name">{{ $item->namaPaket }}</td>
+                    <td data-column="Last Name">{{ number_format($item->harga, 3, ',', '.') }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 

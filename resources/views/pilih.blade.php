@@ -46,7 +46,7 @@
                             name="kembalian">
                     </div>
                     <div class="mt-3">
-                        <a href="/home" class="btn btn-dark mt-3">Kembali</a>
+                        <a href="/homeKasir" class="btn btn-dark mt-3">Kembali</a>
                         <button type="submit" class="btn btn-primary mt-3">Bayar</button>
                     </div>
                 </div>

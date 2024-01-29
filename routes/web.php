@@ -37,4 +37,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/searchDateOwner',[OwnerController::class, 'searchDate'])->name('searchDate');
     Route::get('/invoiceOwner/{carwash}',[OwnerController::class, 'printInvoice'])->name('printInvoice');
     Route::get('/exportOwnerPdf',[OwnerController::class, 'exportPdf'])->name('exportPdf');
+    Route::get('/search', [KasirController::class , 'search'])->name('search');
 });

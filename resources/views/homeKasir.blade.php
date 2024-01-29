@@ -27,6 +27,11 @@
 <body>
     @include('nav')
     <div class="container mt-5">
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
         <h1 style="color: #ffff;" style="display: flex; text-align: center"> PAKET CAR WASH </h1>
         <div class="row">
             @foreach ($paket as $item)

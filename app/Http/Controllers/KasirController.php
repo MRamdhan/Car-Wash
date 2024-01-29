@@ -27,7 +27,7 @@ class KasirController extends Controller
             'namaPaket' => $request->namaPaket,
             'harga' => $request->harga,
             'nama' => $request->nama,
-            'noTlp' => $request->noTlp
+            'noTlp' => $request->noTlp,
         ]);
 
         return redirect()->route('report')->with('message', 'Berhasil Memilih');
@@ -35,7 +35,7 @@ class KasirController extends Controller
 
     public function report()
     {
-        $data = CarWash::all();
+        $data = CarWash::paginate(3);
         return view('report', compact('data'));
     }
 
@@ -76,6 +76,12 @@ class KasirController extends Controller
         $pdf = FacadePdf::loadView('templatePdf', compact('data'));
 
         return $pdf->download('data_pelanggan.pdf');
-        
+    }
+
+    function search(Request $request) {
+        $keyword = $request->input('keyword');
+        $data = CarWash::where('noTlp', 'like', '%'. $keyword . '%')->paginate(5);
+
+        return view('report', compact('data'));
     }
 }
