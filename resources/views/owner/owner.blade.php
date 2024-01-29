@@ -48,6 +48,14 @@
                 </form>
             </div>
         </div>
+        <div class="col-4 mt-5">
+            <form action="{{ route('search') }}" method="GET" class="form-group">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Cari berdasarkan no Telepon" name="keyword">
+                        <button class="btn btn-secondary" type="submit">Cari</button>
+                </div>
+            </form>
+        </div>
         <div class="container mt-5">
             <table class="table table-bordered mt-3 mb-5">
                 <thead>
@@ -76,6 +84,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $data->links() }}
         </div>
     </div>
 </body>

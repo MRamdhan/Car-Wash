@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CarWash;
 use App\Models\Paket;
+use App\Models\Transaksi;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -13,20 +14,20 @@ class OwnerController extends Controller
 {
     public function report()
     {
-        $data = CarWash::all();
+        $data = Transaksi::paginate(3);
         return view('owner.owner', compact('data'));
     }
 
-    public function printInvoice(CarWash $carwash)
+    public function printInvoiceOwner(Transaksi $transaksi)
     {
         $invoice = [
-            'invoice' => $carwash
+            'invoice' => $transaksi
         ];
         $pdf = FacadePdf::loadView('templateInvoice', $invoice);
-        return $pdf->download('Invoice ' . $carwash->nama . '.pdf');
+        return $pdf->download('Invoice ' . $transaksi->nama . '.pdf');
     }
 
-    public function searchDate(Request $request)
+    public function searchDateOwner(Request $request)
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
@@ -34,10 +35,11 @@ class OwnerController extends Controller
         $start_date = \Carbon\Carbon::parse($start_date)->startOfDay();
         $end_date = \Carbon\Carbon::parse($end_date)->endOfDay();
 
-        $data = CarWash::whereBetween('created_at', [$start_date, $end_date])->get();
+        $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->get();
 
         return view('owner.owner', compact('data'));
     }
+    
 
     public function exportPdf(Request $request)
     {
@@ -48,10 +50,17 @@ class OwnerController extends Controller
         $start_date = \Carbon\Carbon::parse($start_date)->startOfDay();
         $end_date = \Carbon\Carbon::parse($end_date)->endOfDay();
 
-        $data = CarWash::whereBetween('created_at', [$start_date, $end_date])->get();
+        $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->get();
 
         $pdf = FacadePdf::loadView('templatePdf', compact('data'));
 
         return $pdf->download('data_pelanggan.pdf');
+    }
+
+    function search(Request $request) {
+        $keyword = $request->input('keyword');
+        $data = Transaksi::where('noTlp', 'like', '%'. $keyword . '%')->paginate(3);
+
+        return view('owner.owner', compact('data'));
     }
 }

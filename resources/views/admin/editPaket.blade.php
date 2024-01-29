@@ -12,22 +12,22 @@
 <body>
     <div class="container mt-5 col-6 pb-5"> 
         <div class="mx-auto">
-            <form action="{{ route('postEditPaket', $paket->id) }}" method="POST" class="form-group">
+            <form action="{{ route('postEditPaket', $produk->id) }}" method="POST" class="form-group">
                 @csrf
                 <div class="card p-4 text-black">
                     <h2> Tambah Paket</h2>
                     <hr>
                     <div class="mb-3">
                         <h5>Paket</h5>
-                        <input type="text" name="paket" class="form-control" value="{{ $paket->paket }}">
+                        <input type="text" name="paket" class="form-control" value="{{ $produk->paket }}">
                     </div>
                     <div class="mb-3">
                         <h5>Harga</h5>
-                        <input type="text" name="harga" class="form-control" value="{{ number_format($paket->harga, 0,',','.') }}">
+                        <input type="text" name="harga" class="form-control" value="{{ number_format($produk->harga, 0,',','.') }}">
                     </div>
                     <div class="mb-3">
                         <h5>Deskripsi</h5>
-                        <input type="text" name="deskripsi" class="form-control" value="{{ $paket->deskripsi }}">
+                        <input type="text" name="deskripsi" class="form-control" value="{{ $produk->deskripsi }}">
                     </div>
                     <div class="mt-3">
                         <a href="/homeAdmin" class="btn btn-dark mt-3">Kembali</a>

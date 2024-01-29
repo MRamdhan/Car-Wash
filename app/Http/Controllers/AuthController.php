@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paket;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,13 +34,13 @@ class AuthController extends Controller
     }
     
     function homeKasir() {
-        $paket = Paket::all();
+        $produk = Produk::all();
 
-        return view('homeKasir',compact('paket'));
+        return view('homeKasir',compact('produk'));
     }
     function homeAdmin() {
-        $paket = Paket::all();
-        return view('admin.homeAdmin', compact('paket'));
+        $produk = Produk::all();
+        return view('admin.homeAdmin', compact('produk'));
     }
     function homeOwner() {
         return view('owner.owner');

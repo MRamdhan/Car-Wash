@@ -20,7 +20,7 @@
                 {{ session('message') }}
             </div>
         @endif
-        <table class="table">
+        <table class="table table-bordered mt-3 mb-5">
             <thead>
                 <tr>
                     <th> No </th>
@@ -30,7 +30,7 @@
                     <th> Action </th>
                 </tr>
             </thead>
-            @foreach ($paket as $item)
+            @foreach ($produk as $item)
             <tbody>
                 <td> {{ $loop->index + 1 }} </td>
                 <td> {{ $item->paket }} </td>

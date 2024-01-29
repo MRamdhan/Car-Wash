@@ -34,7 +34,7 @@
         @endif
         <h1 style="color: #ffff;" style="display: flex; text-align: center"> PAKET CAR WASH </h1>
         <div class="row">
-            @foreach ($paket as $item)
+            @foreach ($produk as $item)
                 <div class="col-4 mt-5">
                     <div class="card">
                         <div class="card-body">

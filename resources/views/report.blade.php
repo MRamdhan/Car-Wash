@@ -8,17 +8,12 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Report</title>
 </head>
-<style>
-    .card {
-        width: 400px;
-    }
-</style>
 
 <body>
     @include('nav')
     <div class="container mt-3">
         <div class="row">
-            <div class="card mx-3 mt-5">
+            <div class="card mx-3 mt-5 col-4">
                 <form action="{{ route('searchDate') }}" method="GET" class="mb-3">
                     <h2>Form Pencarian</h2>
                     <div class="form">
@@ -32,7 +27,7 @@
                     </div>
                 </form>
             </div>
-            <div class="card mx-3 mt-5">
+            <div class="card mx-3 mt-5 col-4">
                 <h2>Form Download PDF</h2>
                 <form action="{{ route('exportPdf') }}" method="GET" class="mb-3">
                     <div class="form">
@@ -49,8 +44,9 @@
             <div class="col-4 mt-5">
                 <form action="{{ route('search') }}" method="GET" class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Cari berdasarkan no Telepon" name="keyword">
-                            <button class="btn btn-secondary" type="submit">Cari</button>
+                        <input type="text" class="form-control" placeholder="Cari berdasarkan no Telepon"
+                            name="keyword">
+                        <button class="btn btn-secondary" type="submit">Cari</button>
                     </div>
                 </form>
             </div>
@@ -76,7 +72,7 @@
                             <td>{{ $item->namaPaket }}</td>
                             <td>Rp.{{ number_format($item->harga, 3, ',', '.') }}</td>
                             <td>
-                                <a href="{{ route('printInvoice', $item->id) }}" class="btn btn-primary">Downlaod
+                                <a href="{{ route('printInvoice', $item->id) }}" class="btn btn-primary">Download
                                     PDF</a>
                             </td>
                         </tr>

@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <title>Document</title>
+    <title>Pilih</title>
+    <style>
+        body{
+            background-color: #1B4242;
+        }
+        .card{
+            background-color: #9EC8B9;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,12 +36,12 @@
                     <div class="mb-3">
                         <h5>Paket</h5>
                         <input type="text" readonly class="form-control mt-1" name="namaPaket"
-                            value="{{ $paket->paket }}">
+                            value="{{ $produk->paket }}">
                     </div>
                     <div class="mb-3">
                         <h5>Harga</h5>
                         <input type="text" readonly class="form-control mt-1" name="harga" id="harga"
-                            value="{{ number_format($paket->harga, 0, ',', '.') }}">
+                            value="{{ number_format($produk->harga, 0, ',', '.') }}">
                     </div>
                     <div class="mb-3">
                         <h5> Input Pembayaran </h5>

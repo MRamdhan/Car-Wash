@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CarWash;
 use App\Models\Paket;
+use App\Models\Produk;
+use App\Models\Transaksi;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -11,11 +13,11 @@ use Illuminate\Support\Facades\Validator;
 
 class KasirController extends Controller
 {
-    function pilih(Paket $paket) {
+    function pilih(Produk $produk) {
         return view('pilih', compact('paket'));
     }
 
-    function postpilih(Request $request, CarWash $carWash) {
+    function postpilih(Request $request, Transaksi $transaksi) {
         $request->validate([
             'namaPaket' => 'required',
             'harga' => 'required',
@@ -23,11 +25,12 @@ class KasirController extends Controller
             'noTlp' => 'required',
         ]);
 
-        CarWash::create([
+        Transaksi::create([
             'namaPaket' => $request->namaPaket,
             'harga' => $request->harga,
             'nama' => $request->nama,
             'noTlp' => $request->noTlp,
+            'user_id' => auth()->id()
         ]);
 
         return redirect()->route('report')->with('message', 'Berhasil Memilih');
@@ -35,18 +38,18 @@ class KasirController extends Controller
 
     public function report()
     {
-        $data = CarWash::paginate(3);
+        $data = Transaksi::paginate(3);
         return view('report', compact('data'));
     }
 
 
-    public function printInvoice(CarWash $carwash)
+    public function printInvoice(Transaksi $transaksi)
     {
         $invoice = [
-            'invoice' => $carwash
+            'invoice' => $transaksi
         ];
         $pdf = FacadePdf::loadView('templateInvoice', $invoice);
-        return $pdf->download('Invoice ' . $carwash->nama . '.pdf');
+        return $pdf->download('Invoice ' . $transaksi->nama . '.pdf');
     }
 
     public function searchDate(Request $request)
@@ -57,7 +60,7 @@ class KasirController extends Controller
         $start_date = \Carbon\Carbon::parse($start_date)->startOfDay();
         $end_date = \Carbon\Carbon::parse($end_date)->endOfDay();
 
-        $data = CarWash::whereBetween('created_at', [$start_date, $end_date])->get();
+        $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->paginate(3);
 
         return view('report', compact('data'));
     }
@@ -71,7 +74,7 @@ class KasirController extends Controller
         $start_date = \Carbon\Carbon::parse($start_date)->startOfDay();
         $end_date = \Carbon\Carbon::parse($end_date)->endOfDay();
 
-        $data = CarWash::whereBetween('created_at', [$start_date, $end_date])->get();
+        $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->get();
 
         $pdf = FacadePdf::loadView('templatePdf', compact('data'));
 
@@ -80,7 +83,7 @@ class KasirController extends Controller
 
     function search(Request $request) {
         $keyword = $request->input('keyword');
-        $data = CarWash::where('noTlp', 'like', '%'. $keyword . '%')->paginate(5);
+        $data = Transaksi::where('noTlp', 'like', '%'. $keyword . '%')->paginate(5);
 
         return view('report', compact('data'));
     }

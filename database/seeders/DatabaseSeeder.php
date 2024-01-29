@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Paket;
+use App\Models\Produk;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -22,19 +23,19 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Paket::create([
+        Produk::create([
             'paket' => 'PAKET 1',
             'harga' => 25000,
             'deskripsi' => 'Paket 1 : Mobil anda akan di bersihkan bagian atas dan dalam mobil saja.',
         ]);
 
-        Paket::create([
+        Produk::create([
             'paket' => 'PAKET 2',
             'harga' => 30000,
             'deskripsi' => 'Paket 2 : Mobil anda akan di bersihkan bagian atas,bawah dan dalam mobilnya.'
         ]);
 
-        Paket::create([
+        Produk::create([
             'paket' => 'PAKET 3',
             'harga' => 50000,
             'deskripsi' => 'Paket 3 : Mobil anda akan di bersihkan di bagian seluruh mobil baik itu atas,bawah dalam mobil dan mesin mobil.'
