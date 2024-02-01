@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksis', function (Blueprint $table) {
+        Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->string('namaPaket');
-            $table->integer('harga');
-            $table->string('nama');
-            $table->string('noTlp');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('produk_id')->constrained();
-            $table->timestamps();
+            $table->string('activity');
+            $table->timestamp('created_at');
         });
     }
 
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksis');
+        Schema::dropIfExists('logs');
     }
 };

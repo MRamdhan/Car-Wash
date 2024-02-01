@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\CarWash;
+use App\Models\Log;
 use App\Models\Paket;
 use App\Models\Produk;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -51,5 +53,26 @@ class AdminController extends Controller
         $produk->delete();
 
         return redirect()->route('homeAdmin')->with('message', 'Paket berhasil di hapus');
+    }
+
+    function tambahKasir() {
+        return view('admin.tambahKasir');
+    }
+
+    function postTambahKasir(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => 'kasir'
+        ]);
+
+        return redirect()->route('homeAdmin')->with('message' , 'Berhasil Tambah Kasir');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CarWash;
+use App\Models\Log;
 use App\Models\Paket;
 use App\Models\Produk;
 use App\Models\Transaksi;
@@ -25,12 +26,20 @@ class KasirController extends Controller
             'noTlp' => 'required',
         ]);
 
+        $id = Produk::first()->id;
+
         Transaksi::create([
             'namaPaket' => $request->namaPaket,
             'harga' => $request->harga,
             'nama' => $request->nama,
             'noTlp' => $request->noTlp,
-            'user_id' => auth()->id()
+            'user_id' => auth()->id(),
+            'produk_id' => $id
+        ]);
+
+        Log::create([
+            'user_id' => auth()->id(),
+            'activity' => 'Kasir berhasil menbah Transaksi' . $request->nama .'!'
         ]);
 
         return redirect()->route('report')->with('message', 'Berhasil Memilih');
@@ -86,5 +95,9 @@ class KasirController extends Controller
         $data = Transaksi::where('noTlp', 'like', '%'. $keyword . '%')->paginate(5);
 
         return view('report', compact('data'));
+    }
+    function log() {
+        $log = Log::where('user_id', auth()->id())->with('user')->get();
+        return view('log', compact('log'));
     }
 }

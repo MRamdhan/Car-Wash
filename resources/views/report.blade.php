@@ -45,10 +45,13 @@
                 <form action="{{ route('search') }}" method="GET" class="form-group">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Cari berdasarkan no Telepon"
-                            name="keyword">
+                        name="keyword">
                         <button class="btn btn-secondary" type="submit">Cari</button>
                     </div>
                 </form>
+            </div>
+            <div class="col-4 mt-5">
+                <a href="{{ route('log') }}" class="btn btn-warning"> Lihat Log </a>
             </div>
         </div>
         <div class="container mt-5">

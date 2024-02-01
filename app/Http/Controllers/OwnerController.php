@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\CarWash;
+use App\Models\Log;
 use App\Models\Paket;
 use App\Models\Transaksi;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
+use function Ramsey\Uuid\v1;
 
 class OwnerController extends Controller
 {
@@ -62,5 +65,9 @@ class OwnerController extends Controller
         $data = Transaksi::where('noTlp', 'like', '%'. $keyword . '%')->paginate(3);
 
         return view('owner.owner', compact('data'));
+    }
+    function logOwner() {
+        $log = Log::where('user_id', auth()->id())->with('user')->get();
+        return view('owner.logOwner', compact('log'));
     }
 }
