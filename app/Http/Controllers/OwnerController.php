@@ -66,8 +66,9 @@ class OwnerController extends Controller
 
         return view('owner.owner', compact('data'));
     }
+
     function logOwner() {
-        $log = Log::where('user_id', auth()->id())->with('user')->get();
+        $log = Log::all();
         return view('owner.logOwner', compact('log'));
     }
 }

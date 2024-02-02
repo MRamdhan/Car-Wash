@@ -11,7 +11,7 @@
     <div class="container mt-5">
         <h1> Home Admin Car Wash </h1>
         <a href="/tambahPaket" class="btn btn-success"> Tambah Paket </a>
-        <a href="/tambahKasir" class="btn btn-warning"> Tambah Kasir</a>
+        <a href="{{ route('tambahKasir') }}" class="btn btn-warning"> Tambah Kasir</a>
         <a href="{{ route('logout') }}" class="btn btn-secondary"> Logout</a>
     </div>
     <div class="container mt-5">

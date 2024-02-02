@@ -13,6 +13,7 @@
     @include('nav')
     <div class="container mt-3">
         <div class="row">
+
             <div class="card mx-3 mt-5 col-4">
                 <form action="{{ route('searchDate') }}" method="GET" class="mb-3">
                     <h2>Form Pencarian</h2>
@@ -27,6 +28,7 @@
                     </div>
                 </form>
             </div>
+
             <div class="card mx-3 mt-5 col-4">
                 <h2>Form Download PDF</h2>
                 <form action="{{ route('exportPdf') }}" method="GET" class="mb-3">
@@ -41,6 +43,7 @@
                     </div>
                 </form>
             </div>
+            
             <div class="col-4 mt-5">
                 <form action="{{ route('search') }}" method="GET" class="form-group">
                     <div class="input-group mb-3">

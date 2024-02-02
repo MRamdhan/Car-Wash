@@ -55,6 +55,9 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $totalPendapatan = 0;
+            @endphp
             @foreach ($data as $item)
                 <tr>
                     <td data-column="Last Name">{{ $item->created_at }}</td>
@@ -63,7 +66,13 @@
                     <td data-column="Last Name">{{ $item->namaPaket }}</td>
                     <td data-column="Last Name">{{ number_format($item->harga, 3, ',', '.') }}</td>
                 </tr>
+                
+                @php
+                    $totalPendapatan += $item->harga;
+                @endphp
             @endforeach
+            <td data-column="Last Name">Total Pendapatan :</td>
+            <td data-column="Last Name"> {{ number_format($totalPendapatan,3 ,',','.') }} </td>
         </tbody>
     </table>
 

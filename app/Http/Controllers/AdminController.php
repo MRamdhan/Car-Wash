@@ -56,7 +56,8 @@ class AdminController extends Controller
     }
 
     function tambahKasir() {
-        return view('admin.tambahKasir');
+        $data = User::all();
+        return view('admin.tambahKasir', compact('data'));
     }
 
     function postTambahKasir(Request $request) {
@@ -70,9 +71,9 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => 'kasir'
+            'role' => 'kasir',
         ]);
 
-        return redirect()->route('homeAdmin')->with('message' , 'Berhasil Tambah Kasir');
+        return redirect()->route('tambahKasir')->with('message' , 'Berhasil Tambah Kasir');
     }
 }
