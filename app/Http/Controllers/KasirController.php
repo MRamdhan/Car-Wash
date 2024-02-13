@@ -47,10 +47,9 @@ class KasirController extends Controller
 
     public function report()
     {
-        $data = Transaksi::paginate(3);
+        $data = Transaksi::latest()->paginate(5);
         return view('report', compact('data'));
     }
-
 
     public function printInvoice(Transaksi $transaksi)
     {
@@ -69,7 +68,7 @@ class KasirController extends Controller
         $start_date = \Carbon\Carbon::parse($start_date)->startOfDay();
         $end_date = \Carbon\Carbon::parse($end_date)->endOfDay();
 
-        $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->paginate(3);
+        $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->paginate(5);
 
         return view('report', compact('data'));
     }

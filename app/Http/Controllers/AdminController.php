@@ -28,7 +28,13 @@ class AdminController extends Controller
         Produk::create([
             'paket' => $request->paket,
             'harga' => $request->harga,
-            'deskripsi' => $request->deskripsi
+            'deskripsi' => $request->deskripsi,
+            'user_id' => auth()->id(),
+        ]);
+
+        Log::create([
+            'activity' => 'Admin Telah menambah ' . $request->paket. '!',
+            'user_id' => auth()->id()
         ]);
 
         return redirect()->route('homeAdmin')->with('message', 'Paket berhasil di tambah');
@@ -45,13 +51,20 @@ class AdminController extends Controller
             'deskripsi' => 'required'
         ]);
 
+        Log::create([
+            'activity' => 'Admin Telah mengubah ' . $request->paket. '!',
+            'user_id' => auth()->id()
+        ]);
         $produk->update($data);
         return redirect()->route('homeAdmin')->with('message','Paket berhasil di ubah');
     }
 
     function hapusPaket(Produk $produk) {
         $produk->delete();
-
+        Log::create([
+            'user_id' => auth()->id(),
+            'activity' => 'Admin Telang menghapus'. $produk->nama .'!',
+        ]);
         return redirect()->route('homeAdmin')->with('message', 'Paket berhasil di hapus');
     }
 
@@ -60,20 +73,62 @@ class AdminController extends Controller
         return view('admin.tambahKasir', compact('data'));
     }
 
-    function postTambahKasir(Request $request) {
+    function postTambahUser(Request $request) {
         $request->validate([
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
+            'role' => 'required',
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => 'kasir',
+            'role' => $request->role,
         ]);
 
-        return redirect()->route('tambahKasir')->with('message' , 'Berhasil Tambah Kasir');
+        Log::create([
+            'activity' => 'Admin Telah menambah' . $request->name . '!',
+            'user_id' => auth()->id()
+        ]);
+
+        return redirect()->route('tambahKasir')->with('message' , 'Berhasil Tambah ' . $request->name . '!');
+    }
+
+    function editUser(User $user) {
+        return view('admin.editKasir',compact('user'));
+    }
+
+    function postEditUser(Request $request, User $user) {
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'role' => 'required',
+        ]);
+
+        Log::create([
+            'activity' => 'Admin Telah mengedit ' . $request->name . '!' ,
+            'user_id' => auth()->id(),
+        ]);
+        $user->update($data);
+        return redirect()->route('tambahKasir')->with('message', 'Berhasil mengedit ' . $request->name . '!');
+    }
+
+    function hapusUser(User $user) {
+        $user->log()->delete();
+        $user->delete();
+        Log::create([
+            'activity' => 'Admin telah menghapus ' . $user->name,
+            'user_id' => auth()->id()
+        ]);
+        return redirect()->back()->with('message', 'Berhasil menghapus'. $user->nane .'!');
+    }
+
+    function searchPaket(Request $request) {
+        $keyword = $request->input('keyword');
+        $produk = Produk::where('paket', 'like' ,'%' .$keyword . '%')->get();
+        return view('admin.homeAdmin', compact('produk'));
     }
 }

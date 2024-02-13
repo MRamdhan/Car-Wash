@@ -14,10 +14,6 @@
             margin: 50px auto;
         }
 
-        /* Zebra striping */
-        tr:nth-of-type(odd) {
-            background: #eee;
-        }
 
         th {
             background: #3498db;
@@ -60,11 +56,11 @@
             @endphp
             @foreach ($data as $item)
                 <tr>
-                    <td data-column="Last Name">{{ $item->created_at }}</td>
-                    <td data-column="Last Name">{{ $item->noTlp }}</td>
-                    <td data-column="First Name">{{ $item->nama }}</td>
-                    <td data-column="Last Name">{{ $item->namaPaket }}</td>
-                    <td data-column="Last Name">{{ number_format($item->harga, 3, ',', '.') }}</td>
+                    <td>{{ $item->created_at }}</td>
+                    <td>{{ $item->noTlp }}</td>
+                    <td>{{ $item->nama }}</td>
+                    <td>{{ $item->namaPaket }}</td>
+                    <td>{{ number_format($item->harga, 3, ',', '.') }}</td>
                 </tr>
                 
                 @php
@@ -72,7 +68,7 @@
                 @endphp
             @endforeach
             <td data-column="Last Name">Total Pendapatan :</td>
-            <td data-column="Last Name"> {{ number_format($totalPendapatan,3 ,',','.') }} </td>
+            <td colspan="5" style="color: red;"> {{ number_format($totalPendapatan,3 ,',','.') }} </td>
         </tbody>
     </table>
 

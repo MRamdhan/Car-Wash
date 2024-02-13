@@ -27,19 +27,23 @@ Route::middleware(['auth'])->group(function () {
     //Admin
     Route::get('/tambahPaket', [AdminController::class, 'tambahPaket'])->name('tambahPaket');
     Route::post('/postTambahPaket', [AdminController::class, 'postTambahPaket'])->name('postTambahPaket');
-    Route::post('/postTambahKasir', [AdminController::class, 'postTambahKasir'])->name('postTambahKasir');
+    Route::post('/postTambahUser', [AdminController::class, 'postTambahUser'])->name('postTambahUser');
+    Route::get('editUser/{user}', [AdminController::class, 'editUser'])->name('editUser');
+    Route::post('postEditUser/{user}', [AdminController::class, 'postEditUser'])->name('postEditUser');
     Route::get('/tambahKasir', [AdminController::class, 'tambahKasir'])->name('tambahKasir');
+    Route::get('hapusUser/{user}', [AdminController::class, 'hapusUser'])->name('hapusUser');
     Route::get('/editPaket{produk}', [AdminController::class, 'editPaket'])->name('editPaket');
     Route::post('/postEditPaket{produk}', [AdminController::class, 'postEditPaket'])->name('postEditPaket');
     Route::get('/hapusPaket{produk}', [AdminController::class, 'hapusPaket'])->name('hapusPaket');
+    Route::get('/searchPaket', [AdminController::class , 'searchPaket'])->name('searchPaket');
 
     //Kasir
     Route::get('/pilih/{produk}',[KasirController::class, 'pilih'])->name('pilih');
     Route::post('/postpilih',[KasirController::class, 'postpilih'])->name('postpilih');
     Route::get('/report',[KasirController::class, 'report'])->name('report');
     Route::get('/searchDate',[KasirController::class, 'searchDate'])->name('searchDate');
-    Route::get('/invoice/{transaksi}',[KasirController::class, 'printInvoice'])->name('printInvoice');
     Route::get('/exportPdf',[KasirController::class, 'exportPdf'])->name('exportPdf');
+    Route::get('/invoice/{transaksi}',[KasirController::class, 'printInvoice'])->name('printInvoice');
     Route::get('/search', [KasirController::class , 'search'])->name('search');
     Route::get('/log', [KasirController::class , 'log'])->name('log');
     
@@ -47,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/searchDateOwner',[OwnerController::class, 'searchDateOwner'])->name('searchDateOwner');
     Route::get('/homeOwner',[OwnerController::class, 'report'])->name('homeOwner');
     Route::get('/invoiceOwner/{transaksi}',[OwnerController::class, 'printInvoiceOwner'])->name('printInvoiceOwner');
-    Route::get('/exportOwnerPdf',[OwnerController::class, 'exportPdf'])->name('exportPdf');
+    Route::get('/exportOwnerPdf',[OwnerController::class, 'exportOwnerPdf'])->name('exportOwnerPdf');
     Route::get('/logOwner', [OwnerController::class , 'logOwner'])->name('logOwner');
+    Route::get('/searchOwner', [OwnerController::class , 'searchOwner'])->name('searchOwner');
+    
 });

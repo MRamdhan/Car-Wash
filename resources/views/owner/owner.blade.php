@@ -7,16 +7,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Report</title>
+    <style>
+        span {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-    @include('nav')
-    <div class="container mt-3">
-        <div class="row">
-            <div class="card mx-3 mt-5 col-4">
-                <form action="{{ route('searchDate') }}" method="GET" class="mb-3">
-                    <h2>Form Pencarian</h2>
-                    <div class="form">
+    @include('template.nav')
+    <div class="container mt-5">
+        <div class="card p-4">
+            <h1 class="text-center"> Home Owner </h1>
+            <hr>
+            @if (session('message'))
+                <div class="alert alert-dark">
+                    {{ session('message') }}
+                </div>
+            @endif
+            <div class="row">
+                <div class="mt-3">
+                    <h4>Total Pendapatan Rp.{{ number_format($totalPendapatan, 2, ',', '.') }}</h4>
+                </div>
+                <div class="col-12">
+                    {!! $chart->container() !!}
+                </div>
+                <form action="{{ route('searchDateOwner') }}" method="GET" class="mb-3 col-6">
+                    <div class="card p-4 text-black rounded-4">
+                        <h2>Form Pencarian</h2>
+                        <hr>
                         <label for="">Tanggal Awal</label>
                         <input type="date" class="form-control" name="start_date" placeholder="Start Date" required>
                         <label for="">Tanggal Akhir</label>
@@ -26,11 +45,10 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="card mx-3 mt-5 col-4">
-                <h2>Form Download PDF</h2>
-                <form action="{{ route('exportPdf') }}" method="GET" class="mb-3">
-                    <div class="form">
+                <form action="{{ route('exportOwnerPdf') }}" method="GET" class="mb-3 col-6">
+                    <div class="card p-4 rounded-4 text-black">
+                        <h2>Form Download PDF</h2>
+                        <hr>
                         <label for="">Tanggal Awal</label>
                         <input type="date" class="form-control" name="start_date" placeholder="Start Date" required>
                         <label for="">Tanggal Akhir</label>
@@ -40,21 +58,28 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="col-4 mt-5">
-                <form action="{{ route('search') }}" method="GET" class="form-group">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Cari berdasarkan no Telepon"
-                        name="keyword">
-                        <button class="btn btn-secondary" type="submit">Cari</button>
+                <div class="container p-4">
+                    <div class="d-flex">
+                        <h2 class="col-11"> Laporan </h2>
+                        <a href="{{ route('homeOwner') }}" class="btn btn-dark"> Refresh </a>
                     </div>
-                </form>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4 mt-4">
+                            <form action="{{ route('searchOwner') }}" method="GET" class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Cari berdasarkan no Telepon"
+                                        name="keyword" required>
+                                    <button class="btn btn-secondary" type="submit">Cari</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-4 mt-4">
+                            <a href="{{ route('logOwner') }}" class="btn btn-warning"> Lihat Log </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-4 mt-5">
-                <a href="{{ route('logOwner') }}" class="btn btn-warning"> Lihat Log </a>
-            </div>
-        </div>
-        <div class="container mt-5">
             <table class="table table-bordered mt-3 mb-5">
                 <thead>
                     <tr>
@@ -67,9 +92,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $item)
+                    @foreach ($transaksi as $item)
                         <tr>
-                            <td>{{ \Carbon\Carbon::parse($item->created_at)->format('Y-m-d H:i:s') }}</td>
+                            <td>{{ $item->created_at }}</td>
                             <td>{{ $item->noTlp }}</td>
                             <td>{{ $item->nama }}</td>
                             <td>{{ $item->namaPaket }}</td>
@@ -81,10 +106,20 @@
                         </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan=""> Total Data : <b style="color: red"> {{ $transaksi->total() }} </b> </td>
+                    </tr>
+                </tfoot>
             </table>
-            {{ $data->links() }}
+            {{ $transaksi->links() }}
         </div>
+
     </div>
+
+    @include('template.footer')
+    <script src="{{ $chart->cdn() }}"></script>
+    {{ $chart->script() }}
 </body>
 
 </html>

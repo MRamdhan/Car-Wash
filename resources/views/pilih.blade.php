@@ -6,23 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <title>Pilih</title>
-    <style>
-        body{
-            background-color: #1B4242;
-        }
-        .card{
-            background-color: #9EC8B9;
-        }
-    </style>
+    <title>Bayar</title>
 </head>
 
 <body>
     <div class="container mt-5 col-6 pb-5">
         <div class="mx-auto">
-            <form action="{{ route('postpilih') }}" method="POST" class="form-group">
+            <form action="{{ route('postpilih') }}" method="POST" class="form-group" onsubmit="return validate()">
                 @csrf
-                <div class="card p-4 text-black">
+                <div class="card p-4 text-black ">
                     <h2> FORMULIR PEMBAYARAN </h2>
                     <hr>
                     <div class="mb-3">
@@ -61,6 +53,7 @@
             </form>
         </div>
     </div>
+
     <script>
         function hitungPengurangan() {
             var harga = parseFloat(document.getElementById('harga').value);
@@ -68,9 +61,21 @@
 
             var kembalian = nominal - harga;
 
-            document.getElementById('kembalian').value = kembalian;
+            document.getElementById('kembalian').value = parseFloat(kembalian);
+        }
+
+        function validate() {
+            var harga = parseFloat(document.getElementById('harga').value);
+            var nominal = parseFloat(document.getElementById('nominal').value);
+
+            if (nominal < harga) {
+                alert("Nominal nya kurang kocik");
+                return false;
+            }
+            return true;
         }
     </script>
+
 </body>
 
 </html>
