@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsive.bootstrap5.min.css') }}">
+
+    <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
+    <script src=" {{ asset('js/jquery.dataTables.min.js') }} "></script>
+    <script src=" {{ asset('js/dataTables.bootstrap5.min.js') }} "></script>
+    <script src=" {{ asset('js/dataTables.responsive.min.js') }} "></script>
+    <script src=" {{ asset('js/responsive.bootstrap5.min.js') }} "></script>
     <title>Report</title>
     <style>
         span {
@@ -27,7 +35,7 @@
             @endif
             <div class="row">
                 <div class="mt-3">
-                    <h4>Total Pendapatan Rp.{{ number_format($totalPendapatan, 2, ',', '.') }}</h4>
+                    <h4>Total Pendapatan Rp {{ number_format($totalPendapatan, 3, '.', '.') }}</h4>
                 </div>
                 <div class="col-12">
                     {!! $chart->container() !!}
@@ -59,28 +67,13 @@
                     </div>
                 </form>
                 <div class="container p-4">
-                    <div class="d-flex">
-                        <h2 class="col-11"> Laporan </h2>
-                        <a href="{{ route('homeOwner') }}" class="btn btn-dark"> Refresh </a>
-                    </div>
+                    <h2 class="col-10"> Laporan </h2>
                     <hr>
-                    <div class="row">
-                        <div class="col-4 mt-4">
-                            <form action="{{ route('searchOwner') }}" method="GET" class="form-group">
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Cari berdasarkan no Telepon"
-                                        name="keyword" required>
-                                    <button class="btn btn-secondary" type="submit">Cari</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-4 mt-4">
-                            <a href="{{ route('logOwner') }}" class="btn btn-warning"> Lihat Log </a>
-                        </div>
-                    </div>
+                    <a href="{{ route('logOwner') }}" class="btn btn-warning"> Lihat Log </a>
+                    <a href="{{ route('homeOwner') }}" class="btn btn-dark"> Refresh </a>
                 </div>
             </div>
-            <table class="table table-bordered mt-3 mb-5">
+            <table id="data" class="table table-striped nowrap">
                 <thead>
                     <tr>
                         <th>Tanggal Pembelian</th>
@@ -92,7 +85,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($transaksi as $item)
+                    @foreach ($data as $item)
                         <tr>
                             <td>{{ $item->created_at }}</td>
                             <td>{{ $item->noTlp }}</td>
@@ -106,19 +99,20 @@
                         </tr>
                     @endforeach
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan=""> Total Data : <b style="color: red"> {{ $transaksi->total() }} </b> </td>
-                    </tr>
-                </tfoot>
             </table>
-            {{ $transaksi->links() }}
         </div>
 
     </div>
 
     @include('template.footer')
     <script src="{{ $chart->cdn() }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new DataTable('#data', {
+                responsive: true
+            });
+        });
+    </script>
     {{ $chart->script() }}
 </body>
 

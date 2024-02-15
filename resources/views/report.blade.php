@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Report</title>
     <style>
+        body{
+            background-color: #D9EDBF;
+        }
         span {
             display: none;
         }
@@ -83,9 +86,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $totalPendapatan = 0;
-                            @endphp
                             @foreach ($data as $item)
                                 <tr>
                                     <td> {{ $item->created_at }} </td>
@@ -99,20 +99,17 @@
                                             PDF</a>
                                     </td>
                                 </tr>
-                                @php
-                                    $totalPendapatan += $item->harga;
-                                @endphp
                             @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5"> <b> Total Pendapatan : </b> </td>
-                                <td style="color: red"> <b>Rp.{{ number_format($totalPendapatan, 3, ',', '.') }}</b> </td>
+                                <td colspan="5"> <b> Total Data : </b> </td>
+                                <td style="color: red"> <b> {{ $data->total() }} </b> </td>
                             </tr>
                         </tfoot>
                     </table>
                     </p>
-                    <p>Total Data : {{ $data->total() }}</p>
+                    {{-- <p>Total Data : {{ $data->total() }}</p> --}}
                     {{ $data->links() }}
                 </div>
             </div>

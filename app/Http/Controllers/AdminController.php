@@ -69,7 +69,7 @@ class AdminController extends Controller
     }
 
     function tambahKasir() {
-        $data = User::all();
+        $data = User::where('role', '!=', 'admin')->get();
         return view('admin.tambahKasir', compact('data'));
     }
 

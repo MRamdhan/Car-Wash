@@ -69,7 +69,7 @@
             var nominal = parseFloat(document.getElementById('nominal').value);
 
             if (nominal < harga) {
-                alert("Nominal nya kurang kocik");
+                alert("Mohon periksa kembali nominalnya");
                 return false;
             }
             return true;

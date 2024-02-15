@@ -19,7 +19,7 @@ class OwnerController extends Controller
 {
     public function report()
     {
-        $transaksi = Transaksi::latest()->paginate(5);
+        $data = Transaksi::all();
         $chartTransaksi = Transaksi::all();
 
         $tanggal = $chartTransaksi->pluck('created_at')->map(function ($date) {
@@ -31,7 +31,7 @@ class OwnerController extends Controller
         $totalPendapatan = array_sum($profit);
         $chart = (new LarapexChart)->setType('area')
             ->setTitle('Cucian Mobil')
-            ->setSubtitle('Dari transaksi hari ini')
+            ->setSubtitle('Dari per Transaksi')
             ->setXAxis($tanggal)
             ->setDataset([
                 [
@@ -39,9 +39,8 @@ class OwnerController extends Controller
                     'data' => $profit
                 ]
             ]);
-            return view('owner.owner', compact('chart','totalPendapatan', 'transaksi'));
+            return view('owner.owner', compact('chart','totalPendapatan', 'data'));
 
-        // return view('owner.owner', compact('data'));
     }
 
     public function printInvoiceOwner(Transaksi $transaksi)
@@ -61,9 +60,25 @@ class OwnerController extends Controller
         $start_date = \Carbon\Carbon::parse($start_date)->startOfDay();
         $end_date = \Carbon\Carbon::parse($end_date)->endOfDay();
 
-        $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->paginate(5);
+        $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->get();
+        $tanggal = $data->pluck('created_at')->map(function ($date) {
+            return \Carbon\Carbon::parse($date)->format('d-m-Y');
+        })->toArray();
 
-        return view('owner.owner', compact('data'));
+        $profit = $data->pluck('harga')->toArray();
+
+        $totalPendapatan = array_sum($profit);
+        $chart = (new LarapexChart)->setType('area')
+            ->setTitle('Cucian Mobil')
+            ->setSubtitle('Dari per Transaksi')
+            ->setXAxis($tanggal)
+            ->setDataset([
+                [
+                    'name' => 'Pendapatan',
+                    'data' => $profit
+                ]
+            ]);
+            return view('owner.owner', compact('chart','totalPendapatan', 'data'));
     }
     
 

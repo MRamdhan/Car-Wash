@@ -48,6 +48,12 @@ class KasirController extends Controller
     public function report()
     {
         $data = Transaksi::latest()->paginate(5);
+        // $dataTotal = Transaksi::all();
+
+        // $profit = $dataTotal->pluck('harga')->toArray();
+        
+        // $totalPendapatan = array_sum($profit);
+        
         return view('report', compact('data'));
     }
 

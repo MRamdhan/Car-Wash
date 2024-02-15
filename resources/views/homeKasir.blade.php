@@ -39,7 +39,7 @@
             <div class="col-12">
                 <img src="img/cucimobil.png" alt="" height="450px" width="100%">
             </div>
-            <h1 class="text-center m-4"> PAKET MOBIL TANPA NODA </h1>
+            <h1 class="text-center m-4"> <b>  PAKET MOBIL TANPA NODA  </b> </h1>
             <hr>
             @if (session('message'))
                 <div class="alert alert-dark">
