@@ -15,7 +15,7 @@ class AuthController extends Controller
 
     function postlogin(Request $request) {
         $data = $request->validate([
-            'email' => 'required',
+            'username' => 'required',
             'password' => 'required',
         ]);
     
@@ -30,7 +30,7 @@ class AuthController extends Controller
             }
         }
     
-        return redirect()->route('login')->with('message', 'Email atau password salah!');
+        return redirect()->route('login')->with('message', 'username atau password salah!');
     }
     
     function homeKasir() {

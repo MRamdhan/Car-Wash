@@ -7,6 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title>Tambah</title>
+    <style>
+        body {
+            background-color: #F0F3F8;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,13 +35,14 @@
                         <input type="text" name="deskripsi" class="form-control">
                     </div>
                     <div class="mt-3">
-                        <a href="/homeAdmin" class="btn btn-dark mt-3">Kembali</a>
-                        <button type="submit" class="btn btn-primary mt-3">Tambah</button>
+                        <a href="/homeAdmin" class="btn btn-dark">Kembali</a>
+                        <button type="submit" class="btn" style="background-color: #25364F; color: white">Tambah</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    @include('template.footer')
 </body>
 
 </html>

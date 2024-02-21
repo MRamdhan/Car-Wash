@@ -19,6 +19,9 @@
         span {
             display: none;
         }
+        body {
+            background-color: #F0F3F8;
+        }
     </style>
 </head>
 
@@ -26,7 +29,7 @@
     @include('template.nav')
     <div class="container mt-5">
         <div class="card p-4">
-            <h1 class="text-center"> Home Owner </h1>
+            <h1 class="text-center mt-5"> Home Owner </h1>
             <hr>
             @if (session('message'))
                 <div class="alert alert-dark">
@@ -40,7 +43,7 @@
                 <div class="col-12">
                     {!! $chart->container() !!}
                 </div>
-                <form action="{{ route('searchDateOwner') }}" method="GET" class="mb-3 col-6">
+                <form action="{{ route('searchDateOwner') }}" method="GET" class="mb-3 col-6 mt-3">
                     <div class="card p-4 text-black rounded-4">
                         <h2>Form Pencarian</h2>
                         <hr>
@@ -53,7 +56,7 @@
                         </div>
                     </div>
                 </form>
-                <form action="{{ route('exportOwnerPdf') }}" method="GET" class="mb-3 col-6">
+                <form action="{{ route('exportOwnerPdf') }}" method="GET" class="mb-3 col-6 mt-3">
                     <div class="card p-4 rounded-4 text-black">
                         <h2>Form Download PDF</h2>
                         <hr>
@@ -79,6 +82,7 @@
                         <th>Tanggal Pembelian</th>
                         <th>No Telepon</th>
                         <th>Nama Pelanggan</th>
+                        <th> Plat Nomor </th>
                         <th>Paket Yang Dipilih</th>
                         <th>Harga Paket</th>
                         <th>Download Invoice</th>
@@ -87,14 +91,18 @@
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $item->created_at }}</td>
+                            <td> {{ $item->created_at }} </td>
                             <td>{{ $item->noTlp }}</td>
                             <td>{{ $item->nama }}</td>
+                            <td> {{ $item->plat }} </td>
                             <td>{{ $item->namaPaket }}</td>
                             <td>Rp.{{ number_format($item->harga, 3, ',', '.') }}</td>
                             <td>
-                                <a href="{{ route('printInvoice', $item->id) }}" class="btn btn-primary">Download
+                                <a href="{{ route('printInvoice', $item->id) }}"
+                                    class="btn btn-primary">Download
                                     PDF</a>
+                                {{-- <a href="{{ route('hapusT', $item->id) }}" class="btn btn-danger"
+                                    onclick="return confirm('Yakin ingin hapus transaksi?')"> Hapus </a> --}}
                             </td>
                         </tr>
                     @endforeach

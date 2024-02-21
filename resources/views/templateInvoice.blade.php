@@ -30,12 +30,14 @@
             <div class="invoice-details">
                 <h5>Nama: {{ $invoice->nama }}</h5>
                 <h5>Paket: {{ $invoice->namaPaket }}</h5>
+                <h5>Plat Nomor: {{ $invoice->plat }}</h5>
                 <h5>Harga: {{ number_format($invoice->harga, 3,'.','.') }}</h5>
                 <h5>No.Tlp: {{ $invoice->noTlp }}</h5>
+                <h5>  </h5>
                 <h3 style="text-align: right">{{ $invoice->created_at }}</h3>
             </div>
             <hr>
-            <h5 style="text-align: center"> Terimakasi Telah Cuci Mobil di Mobil Tanpa Noda </h5>
+            <h5 style="text-align: center"> -------Terimakasi Telah Cuci Mobil di MOBIL BERSIH------- </h5>
         </div>
     </div>
 </body>

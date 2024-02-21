@@ -36,6 +36,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/postEditPaket{produk}', [AdminController::class, 'postEditPaket'])->name('postEditPaket');
     Route::get('/hapusPaket{produk}', [AdminController::class, 'hapusPaket'])->name('hapusPaket');
     Route::get('/searchPaket', [AdminController::class , 'searchPaket'])->name('searchPaket');
+    Route::get('/tambahVoucher', [AdminController::class, 'tambahVoucher'])->name('tambahVoucher');
+    Route::post('/postTambahVoucher', [AdminController::class, 'postTambahVoucher'])->name('postTambahVoucher');
+    Route::get('/editVoucher/{voucher}', [AdminController::class, 'editVoucher'])->name('editVoucher');
+    Route::post('/postEditVoucher/{voucher}', [AdminController::class, 'postEditVoucher'])->name('postEditVoucher');
+    Route::get('/hapusVoucher/{voucher}', [AdminController::class, 'hapusVoucher'])->name('hapusVoucher');
 
     //Kasir
     Route::get('/pilih/{produk}',[KasirController::class, 'pilih'])->name('pilih');
@@ -46,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/invoice/{transaksi}',[KasirController::class, 'printInvoice'])->name('printInvoice');
     Route::get('/search', [KasirController::class , 'search'])->name('search');
     Route::get('/log', [KasirController::class , 'log'])->name('log');
+    Route::get('/hapusT{transaksi}', [KasirController::class, 'hapusT'])->name('hapusT');
     
     //Owner
     Route::get('/searchDateOwner',[OwnerController::class, 'searchDateOwner'])->name('searchDateOwner');

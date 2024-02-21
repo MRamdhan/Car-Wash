@@ -6,11 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsive.bootstrap5.min.css') }}">
+
+    <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
+    <script src=" {{ asset('js/jquery.dataTables.min.js') }} "></script>
+    <script src=" {{ asset('js/dataTables.bootstrap5.min.js') }} "></script>
+    <script src=" {{ asset('js/dataTables.responsive.min.js') }} "></script>
+    <script src=" {{ asset('js/responsive.bootstrap5.min.js') }} "></script>
     <title>Report</title>
     <style>
-        body{
-            background-color: #D9EDBF;
+        body {
+            background-color: #F0F3F8;
         }
+
         span {
             display: none;
         }
@@ -21,9 +30,14 @@
     @include('template.nav')
     <div class="container mt-5">
         <div class="card p-4">
-            <h1 class="text-center"> Laporan Kasir </h1>
+            <h1 class="text-center mt-5"> Laporan Kasir </h1>
             <hr>
-            <div class="row">
+            @if (session('message'))
+            <div class="alert alert-dark">
+                {{ Session('message') }}
+            </div>
+        @endif
+            <div class="row mt-4">
                 <form action="{{ route('searchDate') }}" method="GET" class="mb-3 col-6">
                     <div class="card p-4 rounded-4 text-black">
                         <h2>Form Pencarian</h2>
@@ -54,32 +68,18 @@
                 <div class="container p-4">
                     <div class="d-flex">
                         <h2 class="col-11"> Laporan </h2>
-                        <a href="{{ route('report') }}" class="btn btn-dark"> Refresh </a>
                     </div>
                     <hr>
-                    <div class="row">
-                        <div class="col-4 mt-4">
-                            <form action="{{ route('search') }}" method="GET" class="form-group">
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Cari berdasarkan no Telepon"
-                                        name="keyword" required>
-                                    <button class="btn btn-secondary" type="submit">Cari</button>
-                                </div>
-                            </form>
-                        </div>
-                        {{-- <div class="col-4 mt-4">
-                            <a href="{{ route('log') }}" class="btn btn-warning"> Lihat Log </a>
-                        </div> --}}
-                    </div>
 
                 </div>
                 <div class="container">
-                    <table class="table table-bordered">
+                    <table id="data" class="table table-striped nowrap">
                         <thead>
                             <tr>
                                 <th>Tanggal Pembelian</th>
                                 <th>No Telepon</th>
                                 <th>Nama Pelanggan</th>
+                                <th> Plat Nomor </th>
                                 <th>Paket Yang Dipilih</th>
                                 <th>Harga Paket</th>
                                 <th>Download Invoice</th>
@@ -91,26 +91,23 @@
                                     <td> {{ $item->created_at }} </td>
                                     <td>{{ $item->noTlp }}</td>
                                     <td>{{ $item->nama }}</td>
+                                    <td> {{ $item->plat }} </td>
                                     <td>{{ $item->namaPaket }}</td>
                                     <td>Rp.{{ number_format($item->harga, 3, ',', '.') }}</td>
                                     <td>
                                         <a href="{{ route('printInvoice', $item->id) }}"
                                             class="btn btn-primary">Download
                                             PDF</a>
+                                        {{-- <a href="{{ route('hapusT', $item->id) }}" class="btn btn-danger"
+                                            onclick="return confirm('Yakin ingin hapus transaksi?')"> Hapus </a> --}}
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="5"> <b> Total Data : </b> </td>
-                                <td style="color: red"> <b> {{ $data->total() }} </b> </td>
-                            </tr>
-                        </tfoot>
                     </table>
                     </p>
                     {{-- <p>Total Data : {{ $data->total() }}</p> --}}
-                    {{ $data->links() }}
+                    {{-- {{ $data->links() }} --}}
                 </div>
             </div>
 
@@ -118,6 +115,11 @@
 
     </div>
     @include('template.footer')
+    <script>
+        new DataTable('#data', {
+            responsive: true
+        });
+    </script>
 </body>
 
 </html>

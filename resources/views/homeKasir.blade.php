@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Home</title>
     <style>
+        body {
+            background-color: #F0F3F8;
+        }
+
         .card {
             background-color: white;
             box-shadow: 0 4px 8px black;
@@ -34,12 +38,10 @@
 
 <body>
     @include('template.nav')
+    <img src="img/mobilbersih.png" alt="" width="100%" height="650px">
     <div class="container mt-5">
         <div class="row">
-            <div class="col-12">
-                <img src="img/cucimobil.png" alt="" height="450px" width="100%">
-            </div>
-            <h1 class="text-center m-4"> <b>  PAKET MOBIL TANPA NODA  </b> </h1>
+            <h1 class="text-center m-4"> <b> PAKET MOBIL BERSIH </b> </h1>
             <hr>
             @if (session('message'))
                 <div class="alert alert-dark">
@@ -54,7 +56,8 @@
                             <hr>
                             <p class="card-text mt-3"> Harga Rp: {{ number_format($item->harga, 0, ',', '.') }}</p>
                             <p class="card-description"> {{ $item->deskripsi }} </p>
-                            <a href="{{ route('pilih', $item->id) }}" class="btn btn-warning"> Pilih </a>
+                            <a href="{{ route('pilih', $item->id) }}" class="btn"
+                                style="background-color: #25364F; color: white"> Pilih </a>
                         </div>
                     </div>
                 </div>

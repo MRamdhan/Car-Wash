@@ -7,6 +7,7 @@ use App\Models\Log;
 use App\Models\Paket;
 use App\Models\Produk;
 use App\Models\User;
+use App\Models\Voucher;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -76,14 +77,19 @@ class AdminController extends Controller
     function postTambahUser(Request $request) {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'username' => 'required',
             'password' => 'required',
             'role' => 'required',
         ]);
 
+        $usernameTersedia = User::where('username', $request->username)->first();
+        if($usernameTersedia){
+            return redirect()->back()->with('message', 'username Sudah Tersedia');
+        }
+
         User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'username' => $request->username,
             'password' => bcrypt($request->password),
             'role' => $request->role,
         ]);
@@ -103,8 +109,7 @@ class AdminController extends Controller
     function postEditUser(Request $request, User $user) {
         $data = $request->validate([
             'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'username' => 'required',
             'role' => 'required',
         ]);
 
@@ -126,9 +131,56 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Berhasil menghapus'. $user->nane .'!');
     }
 
-    function searchPaket(Request $request) {
-        $keyword = $request->input('keyword');
-        $produk = Produk::where('paket', 'like' ,'%' .$keyword . '%')->get();
-        return view('admin.homeAdmin', compact('produk'));
+    function tambahVoucher() {
+        $voucher = Voucher::all();
+        return view('admin.tambahVoucher', compact('voucher'));
+    }
+
+    function postTambahVoucher(Request $request) {
+        $request->validate([
+            'kode' => 'required',
+            'diskon' => 'required',
+            'kedaluwarsa' => 'required',
+        ]);
+
+        Voucher::create([
+            'kode' => $request->kode,
+            'diskon' => $request->diskon,
+            'kedaluwarsa' => $request->kedaluwarsa,
+        ]);
+
+        Log::create([
+            'activity' => 'Admin telah menambah voucher' . $request->kode . '!',
+            'user_id' => auth()->id()
+        ]);
+
+        return redirect()->back()->with('message', 'Berhasil menambah voucher');
+    }
+
+    function editVoucher(Voucher $voucher) {
+        return view('admin.editVoucher', compact('voucher'));
+    }
+    function postEditVoucher(Request $request, Voucher $voucher) {
+        $data = $request->validate([
+            'kode' => 'required',
+            'diskon' => 'required',
+            'kedaluwarsa' => 'required',
+        ]);
+        Log::create([
+            'activity' => 'Admin Telah mengedit ' . $request->kode . '!' ,
+            'user_id' => auth()->id(),
+        ]);
+        $voucher->update($data);
+        // dd($voucher);
+        return redirect()->route('tambahVoucher')->with('message', 'Berhasil mengedit ' . $request->name . '!');
+    }    
+
+    function hapusVoucher(Voucher $voucher) {
+        $voucher->delete();
+        Log::create([
+            'activity' => 'Admin telah menghapus ' . $voucher->kode,
+            'user_id' => auth()->id()
+        ]);
+        return redirect()->back()->with('message', 'Berhasil menghapus'. $voucher->nane .'!');
     }
 }

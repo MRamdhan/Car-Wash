@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Paket;
 use App\Models\Produk;
 use App\Models\User;
+use App\Models\Voucher;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -44,20 +45,37 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Kasir',
             'role' => 'kasir',
-            'email' => 'kasir@a.com',
+            'username' => 'kasir1',
             'password' => bcrypt(1),
         ]);
         User::create([
             'name' => 'Admin',
             'role' => 'admin',
-            'email' => 'admin@a.com',
+            'username' => 'admin',
             'password' => bcrypt(1),
         ]);
         User::create([
             'name' => 'Owner',
             'role' => 'owner',
-            'email' => 'owner@a.com',
+            'username' => 'owner',
             'password' => bcrypt(1),
+        ]);
+
+        Voucher::create([
+            'kode' => 'DISKON 10 %',
+            'kedaluwarsa' => now()->addDay(1),
+            'diskon' => 10
+        ]);
+        Voucher::create([
+            'kode' => 'DISKON 50 %',
+            'kedaluwarsa' => now()->addDay(1),
+            'diskon' => 50
+        ]);
+
+        Voucher::create([
+            'kode' => 'DISKON 10 kali cuci',
+            'kedaluwarsa' => now()->addDay(1),
+            'diskon' => 100
         ]);
     }
 }

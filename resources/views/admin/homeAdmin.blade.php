@@ -6,35 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsive.bootstrap5.min.css') }}">
+
+    <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/responsive.bootstrap5.min.js') }}"></script>
+    <title>Home Admin</title>
+    <style>
+        body {
+            background-color: #F0F3F8;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container mt-5">
+    @include('template.nav')
+    <div class="container" style="margin-top: 100px">
+        @if (session('message'))
+            <div class="alert alert-dark">
+                {{ Session('message') }}
+            </div>
+        @endif
         <div class="card p-4">
-            <h1> Home Admin Mobil Tanpa Noda </h1>
+            <h1> Home Admin Mobil Bersih </h1>
             <hr>
-            <div class="d-flex">
-                <div class="mb-3" style="margin-right: 20px">
-                    <a href="{{ route('tambahPaket') }}" class="btn btn-success"> Tambah Paket </a>
-                </div>
-                <div class="mb-3" style="margin-right: 20px">
-                    <a href="{{ route('tambahKasir') }}" class="btn btn-warning"> Lihat User </a>
-                </div>
-                <div class="mb-3">
-                    <a href="{{ route('logout') }}" class="btn btn-secondary" onclick="return confirm('Yakin Logout?')"> Logout </a>
-                </div>
-            </div>
-            <div class="col-4 mt-2">
-                <form action="{{ route('searchPaket') }}" method="GET" class="form-group">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Cari berdasarkan Nama Paket"
-                            name="keyword">
-                        <button class="btn btn-dark" type="submit">Cari</button>
-                    </div>
-                </form>
-            </div>
-            <table class="table table-bordered mt-3 mb-5">
+            <table id="data" class="table table-striped nowarp mt-3 mb-5">
                 <thead>
                     <tr>
                         <th> No </th>
@@ -61,6 +60,11 @@
         </div>
     </div>
     @include('template.footer')
+    <script>
+        new DataTable('#data', {
+            responsive: true,
+        });
+    </script>
 </body>
 
 </html>

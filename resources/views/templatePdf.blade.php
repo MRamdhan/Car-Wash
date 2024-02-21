@@ -43,6 +43,7 @@
     <table style="position: relative; top: 50px;">
         <thead>
             <tr>
+                <th> No </th>
                 <th> Tanggal Pembelian </th>
                 <th> No Telepon </th>
                 <th> Nama Pelanggan </th>
@@ -56,6 +57,7 @@
             @endphp
             @foreach ($data as $item)
                 <tr>
+                    <td> {{ $loop->index + 1 }} </td>
                     <td>{{ $item->created_at }}</td>
                     <td>{{ $item->noTlp }}</td>
                     <td>{{ $item->nama }}</td>

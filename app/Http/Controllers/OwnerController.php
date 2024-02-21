@@ -62,7 +62,7 @@ class OwnerController extends Controller
 
         $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->get();
         $tanggal = $data->pluck('created_at')->map(function ($date) {
-            return \Carbon\Carbon::parse($date)->format('d-m-Y');
+            return \Carbon\Carbon::parse($date);
         })->toArray();
 
         $profit = $data->pluck('harga')->toArray();
@@ -106,7 +106,7 @@ class OwnerController extends Controller
     }
 
     function logOwner() {
-        $log = Log::paginate(5);
+        $log = Log::all();
         return view('owner.logOwner', compact('log'));
     }
 }
