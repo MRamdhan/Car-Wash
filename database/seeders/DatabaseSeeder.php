@@ -24,24 +24,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Produk::create([
-            'paket' => 'PAKET 1',
-            'harga' => 25000,
-            'deskripsi' => 'Paket 1 : Mobil anda akan di bersihkan bagian atas dan dalam mobil saja.',
-        ]);
-
-        Produk::create([
-            'paket' => 'PAKET 2',
-            'harga' => 30000,
-            'deskripsi' => 'Paket 2 : Mobil anda akan di bersihkan bagian atas,bawah dan dalam mobilnya.'
-        ]);
-
-        Produk::create([
-            'paket' => 'PAKET 3',
-            'harga' => 50000,
-            'deskripsi' => 'Paket 3 : Mobil anda akan di bersihkan di bagian seluruh mobil baik itu atas,bawah dalam mobil dan mesin mobil.'
-        ]);
-
         User::create([
             'name' => 'Kasir',
             'role' => 'kasir',

@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Login</title>
     <style>
-        .card{
+        .card {
             background-color: #F0F3F8;
         }
+
         .box {
             margin-top: 100px;
             box-shadow: 0 4px 8px black;
@@ -31,7 +32,7 @@
                     <div class="col-md-6" style="background-color: #25364F;">
                         <div class="container mt-5 border-2 rounded-4">
                             <div class="card">
-                                <h1 style="text-align: center" class="mt-4"> <b> MOBIL BERSIH  </b></h1>
+                                <h1 style="text-align: center" class="mt-4"> <b> MOBIL BERSIH </b></h1>
                                 <div class="card-body p-4 border-2 text-black rounded-4">
                                     <h4> Login </h4>
                                     @if (session('message'))
@@ -48,7 +49,8 @@
                                         <input type="password" name="password" id="password" class="form-control">
                                     </div>
                                     <div class="mt-4">
-                                        <button class="btn btn" style="background-color: #139AED; color: white"> Login </button>
+                                        <button class="btn btn" style="background-color: #139AED; color: white"> Login
+                                        </button>
                                     </div>
                                 </div>
                             </div>

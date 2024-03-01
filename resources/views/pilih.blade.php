@@ -24,6 +24,11 @@
                 @csrf
                 <div class="card p-4 text-black">
                     <h2> FORMULIR PEMBAYARAN </h2>
+                    @if (session('message'))
+                        <div class="alert alert-dark">
+                            {{ session('message') }}
+                        </div>
+                    @endif
                     <hr>
                     <div class="mb-3">
                         <h5>No.Tlp</h5>
@@ -44,11 +49,6 @@
                     </div>
                     <div class="mb-3">
                         <h5>Harga</h5>
-                        <input type="text" readonly class="form-control mt-1" id="hargaAwal" name="harga"
-                            value="{{ number_format($produk->harga, 0, ',', '.') }}">
-                    </div>
-                    <div class="mb-3">
-                        <h5>Harga Setelah Diskon</h5>
                         <input type="text" readonly class="form-control mt-1" id="hargaSetelahDiskon"
                             value="{{ number_format($produk->harga, 0, ',', '.') }}">
                     </div>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="mb-3">
                         <h5>Input Pembayaran</h5>
-                        <input type="text" class="form-control mt-1" required id="nominal"
+                        <input type="number" class="form-control mt-1" required id="nominal"
                             oninput="hitungPengurangan()" name="nominal">
                     </div>
                     <div class="mb-3">
@@ -76,6 +76,11 @@
                         <a href="/homeKasir" class="btn btn-dark mt-3">Kembali</a>
                         <button type="submit" class="btn mt-3" style="background-color: #25364F; color: white">Bayar</button>
                     </div>
+                    
+                    <div class="mb-3">
+                        <input type="text" readonly class="form-control mt-1" id="hargaAwal" name="harga"
+                            value="{{ number_format($produk->harga, 0, ',', '.') }}" hidden>
+                    </div>
                 </div>
             </form>
         </div>
@@ -86,9 +91,9 @@
             var hargaAwal = parseFloat(document.getElementById('hargaAwal').value);
             var diskon = 0;
 
-            var voucherSelect = document.getElementById('kode_voucher');
+            var kode_voucher = document.getElementById('kode_voucher');
             var id_voucher = document.getElementById('id_voucher');
-            var voucherId = voucherSelect.value;
+            var voucherId = kode_voucher.value;
 
             id_voucher.value = voucherId;
 
@@ -98,7 +103,8 @@
             }
 
             var hargaSetelahDiskon = hargaAwal - diskon;
-            document.getElementById('hargaSetelahDiskon').value = hargaSetelahDiskon.toFixed(3);
+            document.getElementById('hargaSetelahDiskon').value = parseFloat(hargaSetelahDiskon);
+            // document.getElementById('hargaSetelahDiskon').value();
         }
 
 

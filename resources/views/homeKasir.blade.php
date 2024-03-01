@@ -21,10 +21,6 @@
             margin: 0;
         }
 
-        .container {
-            flex: 1;
-        }
-
         .card:hover {
             transform: scale(1.05);
         }
@@ -50,11 +46,11 @@
             @endif
             @foreach ($produk as $item)
                 <div class="col-4 mt-5">
-                    <div class="card">
+                    <div class="card" style="height: 100%;">
                         <div class="card-body">
                             <h3> {{ $item->paket }} </h3>
                             <hr>
-                            <p class="card-text mt-3"> Harga Rp: {{ number_format($item->harga, 0, ',', '.') }}</p>
+                            <p class="card-text mt-3"> <b> Harga : Rp {{ number_format($item->harga, 0, ',', '.') }}</b> </p>
                             <p class="card-description"> {{ $item->deskripsi }} </p>
                             <a href="{{ route('pilih', $item->id) }}" class="btn"
                                 style="background-color: #25364F; color: white"> Pilih </a>

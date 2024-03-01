@@ -30,7 +30,7 @@
     @include('template.nav')
     <div class="container mt-5">
         <div class="card p-4">
-            <h1 class="text-center mt-5"> Laporan Kasir </h1>
+            <h1 class="text-center mt-5"> Report Kasir </h1>
             <hr>
             @if (session('message'))
             <div class="alert alert-dark">
@@ -40,11 +40,11 @@
             <div class="row mt-4">
                 <form action="{{ route('searchDate') }}" method="GET" class="mb-3 col-6">
                     <div class="card p-4 rounded-4 text-black">
-                        <h2>Form Pencarian</h2>
+                        <h2>Form Search</h2>
                         <hr>
-                        <label for="">Tanggal Awal</label>
+                        <label for="">Start Date</label>
                         <input type="date" class="form-control" name="start_date" placeholder="Start Date" required>
-                        <label for="">Tanggal Akhir</label>
+                        <label for="">End Date </label>
                         <input type="date" class="form-control" name="end_date" placeholder="End Date" required>
                         <div class="col mt-3">
                             <button type="submit" class="btn btn-primary">Search</button>
@@ -56,24 +56,24 @@
                     <div class="card text-black p-4 rounded-4">
                         <h2>Form Download</h2>
                         <hr>
-                        <label for="">Tanggal Awal</label>
+                        <label for="">Start Date </label>
                         <input type="date" class="form-control" name="start_date" placeholder="Start Date" required>
-                        <label for="">Tanggal Akhir</label>
+                        <label for="">End Date</label>
                         <input type="date" class="form-control" name="end_date" placeholder="End Date" required>
                         <div class="col mt-3">
-                            <button type="submit" class="btn btn-success">Buat PDF</button>
+                            <button type="submit" class="btn btn-success">Download PDF</button>
                         </div>
                     </div>
                 </form>
                 <div class="container p-4">
                     <div class="d-flex">
-                        <h2 class="col-11"> Laporan </h2>
+                        <h2 class="col-11"> History </h2>
                     </div>
                     <hr>
 
                 </div>
                 <div class="container">
-                    <table id="data" class="table table-striped nowrap">
+                    <table  id="data" class="table table-striped nowrap">
                         <thead>
                             <tr>
                                 <th>Tanggal Pembelian</th>

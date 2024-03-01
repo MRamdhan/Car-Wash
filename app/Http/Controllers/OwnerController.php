@@ -22,16 +22,29 @@ class OwnerController extends Controller
         $data = Transaksi::all();
         $chartTransaksi = Transaksi::all();
 
-        $tanggal = $chartTransaksi->pluck('created_at')->map(function ($date) {
-            return \Carbon\Carbon::parse($date)->format('d-m-Y');
+        $groupedHistories = $chartTransaksi->groupBy(function ($history) {
+            return \Carbon\Carbon::parse($history->created_at)->format('d-m-Y');
+        })->map(function ($dailyHistories) {
+            return [
+                'date' => $dailyHistories->first()->created_at,
+                'harga' => $dailyHistories->sum('harga'),
+            ];
+        });
+
+        $tanggal = $groupedHistories->pluck('date')->map(function ($date) {
+            return \Carbon\Carbon::parse($date)->format('d-m-y');
         })->toArray();
 
-        $profit = $chartTransaksi->pluck('harga')->toArray();
+        $profit = $groupedHistories->pluck('harga')->toArray();
 
         $totalPendapatan = array_sum($profit);
-        $chart = (new LarapexChart)->setType('area')
-            ->setTitle('Cucian Mobil')
-            ->setSubtitle('Dari per Transaksi')
+
+        $chart = (new LarapexChart)->setType('bar')
+            ->setTitle('Cuci Mobil')
+            ->setColors([
+                '#25364F'
+            ])
+            ->setSubtitle('Data per Transaksi')
             ->setXAxis($tanggal)
             ->setDataset([
                 [
@@ -39,8 +52,7 @@ class OwnerController extends Controller
                     'data' => $profit
                 ]
             ]);
-            return view('owner.owner', compact('chart','totalPendapatan', 'data'));
-
+        return view('owner.owner', compact('chart', 'totalPendapatan', 'data'));
     }
 
     public function printInvoiceOwner(Transaksi $transaksi)
@@ -61,16 +73,29 @@ class OwnerController extends Controller
         $end_date = \Carbon\Carbon::parse($end_date)->endOfDay();
 
         $data = Transaksi::whereBetween('created_at', [$start_date, $end_date])->get();
-        $tanggal = $data->pluck('created_at')->map(function ($date) {
-            return \Carbon\Carbon::parse($date);
+        $groupedHistories = $data->groupBy(function ($history) {
+            return \Carbon\Carbon::parse($history->created_at)->format('d-m-Y');
+        })->map(function ($dailyHistories) {
+            return [
+                'date' => $dailyHistories->first()->created_at,
+                'harga' => $dailyHistories->sum('harga'),
+            ];
+        });
+
+        $tanggal = $groupedHistories->pluck('date')->map(function ($date) {
+            return \Carbon\Carbon::parse($date)->format('d-m-y');
         })->toArray();
 
-        $profit = $data->pluck('harga')->toArray();
+        $profit = $groupedHistories->pluck('harga')->toArray();
 
         $totalPendapatan = array_sum($profit);
-        $chart = (new LarapexChart)->setType('area')
-            ->setTitle('Cucian Mobil')
-            ->setSubtitle('Dari per Transaksi')
+
+        $chart = (new LarapexChart)->setType('bar')
+            ->setTitle('Cuci Mobil')
+            ->setColors([
+                '#25364F'
+            ])
+            ->setSubtitle('Data per Transaksi')
             ->setXAxis($tanggal)
             ->setDataset([
                 [
@@ -78,9 +103,9 @@ class OwnerController extends Controller
                     'data' => $profit
                 ]
             ]);
-            return view('owner.owner', compact('chart','totalPendapatan', 'data'));
+        return view('owner.owner', compact('chart', 'totalPendapatan', 'data'));
     }
-    
+
 
     public function exportOwnerPdf(Request $request)
     {
@@ -98,14 +123,16 @@ class OwnerController extends Controller
         return $pdf->download('data_pelanggan.pdf');
     }
 
-    function searchOwner(Request $request) {
+    function searchOwner(Request $request)
+    {
         $keyword = $request->input('keyword');
-        $data = Transaksi::where('noTlp', 'like', '%'. $keyword . '%')->paginate(5);
+        $data = Transaksi::where('noTlp', 'like', '%' . $keyword . '%')->paginate(5);
 
         return view('owner.owner', compact('data'));
     }
 
-    function logOwner() {
+    function logOwner()
+    {
         $log = Log::all();
         return view('owner.logOwner', compact('log'));
     }

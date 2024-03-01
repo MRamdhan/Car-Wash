@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaksi extends Model
 {
     use HasFactory;
-    protected $fillable = ['namaPaket','harga','nama','noTlp','nominal','user_id','produk_id','voucher_id','plat'];
-
+    protected $guarded = ['id'];
     function produk() {
         return $this->hasMany(Produk::class);
     }
