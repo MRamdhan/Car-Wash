@@ -98,11 +98,9 @@
                             <td>{{ $item->namaPaket }}</td>
                             <td>Rp.{{ number_format($item->harga, 3, ',', '.') }}</td>
                             <td>
-                                <a href="{{ route('printInvoice', $item->id) }}"
+                                <a href="{{ route('printInvoiceOwner', $item->id) }}"
                                     class="btn btn-primary">Download
                                     PDF</a>
-                                {{-- <a href="{{ route('hapusT', $item->id) }}" class="btn btn-danger"
-                                    onclick="return confirm('Yakin ingin hapus transaksi?')"> Hapus </a> --}}
                             </td>
                         </tr>
                     @endforeach

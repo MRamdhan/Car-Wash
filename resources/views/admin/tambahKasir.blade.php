@@ -53,7 +53,6 @@
                         <option value="kasir">Kasir</option>
                         <option value="owner">Owner</option>
                     </select>
-                    {{-- <input type="text" class="form-control" name="role" value="kasir" readonly> --}}
                 </div>
                 <div class="mt-3">
                     <a href="/homeAdmin" class="btn btn-dark"> Back </a>

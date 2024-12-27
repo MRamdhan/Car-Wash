@@ -33,6 +33,9 @@
         <div class="card p-4">
             <h1> Home Admin Mobil Bersih </h1>
             <hr>
+            <span>
+            <a href="{{ route('tambahPaket') }}" class="btn btn-success mb-3"> Tambah </a>
+            </span>
             <table id="data" class="table table-striped nowarp mt-3 mb-5">
                 <thead>
                     <tr>

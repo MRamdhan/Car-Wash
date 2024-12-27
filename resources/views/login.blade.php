@@ -42,11 +42,11 @@
                                     @endif
                                     <div class="mb-3">
                                         <label for="username">Username</label>
-                                        <input type="username" name="username" id="username" class="form-control">
+                                        <input type="username" name="username" id="username" class="form-control" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="password">Password</label>
-                                        <input type="password" name="password" id="password" class="form-control">
+                                        <input type="password" name="password" id="password" class="form-control" required>
                                     </div>
                                     <div class="mt-4">
                                         <button class="btn btn" style="background-color: #139AED; color: white"> Login

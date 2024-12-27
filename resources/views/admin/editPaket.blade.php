@@ -33,7 +33,7 @@
                     </div>
                     <div class="mb-3">
                         <h5>Deskripsi</h5>
-                        <input type="text" name="deskripsi" class="form-control" value="{{ $produk->deskripsi }}">
+                        <input type="textarea" name="deskripsi" class="form-control" value="{{ $produk->deskripsi }}">
                     </div>
                     <div class="mt-3">
                         <a href="/homeAdmin" class="btn btn-dark">Kembali</a>

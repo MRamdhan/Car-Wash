@@ -29,10 +29,6 @@ class KasirController extends Controller
             'nama' => 'required',
             'noTlp' => 'required|min:10',
         ]);
-
-        if($request->noTlp){
-            return redirect()->back()->with('message', 'test');
-        }
         
         $id = Produk::first()->id;
         $diskon = 0;
@@ -64,7 +60,7 @@ class KasirController extends Controller
             'activity' => 'Kasir berhasil menambah Transaksi ' . $request->nama . '!'
         ]); 
 
-        return redirect()->route('report')->with('message', 'Berhasil Memilih');
+        return redirect()->route('report')->with('message', 'Transaksi Berhasil');
     }
 
 
